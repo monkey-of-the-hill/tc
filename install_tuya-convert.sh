@@ -50,6 +50,7 @@ done
 
 # Update container OS
 msg "Updating container OS..."
+apt-get --allow-releaseinfo-change update >/dev/null
 apt-get update >/dev/null
 apt-get -qqy upgrade &>/dev/null
 
