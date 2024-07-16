@@ -157,9 +157,9 @@ msg "Updating LXC template list..."
 pveam update >/dev/null
 msg "Downloading LXC template..."
 OSTYPE=debian
-OSVERSION=${OSTYPE}-11
+OSVERSION=${OSTYPE}-10
 mapfile -t TEMPLATES < <(
-  pveam available -section system | \
+  pveam available -section turnkeylinux | \
   sed -n "s/.*\($OSVERSION.*\)/\1/p" | \
   sort -t - -k 2 -V
 )
