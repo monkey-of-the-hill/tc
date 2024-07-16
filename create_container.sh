@@ -163,7 +163,8 @@ OSVERSION=${OSTYPE}-10
 #  sed -n "s/.*\($OSVERSION.*\)/\1/p" | \
 #  sort -t - -k 2 -V
 #)
-TEMPLATE="${TEMPLATES[-1]}"
+# TEMPLATE="${TEMPLATES[-1]}"
+TEMPLATE="debian-10-standard_10.1-1_amd64.tar.xz"
 #TEMPLATE="https://images.linuxcontainers.org/images/debian/buster/amd64/default/20240716_05%3A24/rootfs.tar.xz"
 #pveam download local $TEMPLATE >/dev/null ||
 #  die "A problem occured while downloading the LXC template."
