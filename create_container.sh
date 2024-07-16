@@ -153,19 +153,20 @@ CTID=$(pvesh get /cluster/nextid)
 info "Container ID is $CTID."
 
 # Download latest Debian LXC template
-msg "Updating LXC template list..."
-pveam update >/dev/null
-msg "Downloading LXC template..."
-OSTYPE=debian
-OSVERSION=${OSTYPE}-10-turnkey-core
-mapfile -t TEMPLATES < <(
-  pveam available -section turnkeylinux | \
-  sed -n "s/.*\($OSVERSION.*\)/\1/p" | \
-  sort -t - -k 2 -V
-)
-TEMPLATE="${TEMPLATES[-1]}"
-pveam download local $TEMPLATE >/dev/null ||
-  die "A problem occured while downloading the LXC template."
+# msg "Updating LXC template list..."
+#pveam update >/dev/null
+#msg "Downloading LXC template..."
+#OSTYPE=debian
+#OSVERSION=${OSTYPE}-10-turnkey-core
+#mapfile -t TEMPLATES < <(
+#  pveam available -section turnkeylinux | \
+#  sed -n "s/.*\($OSVERSION.*\)/\1/p" | \
+#  sort -t - -k 2 -V
+#)
+#TEMPLATE="${TEMPLATES[-1]}"
+#TEMPLATE="https://images.linuxcontainers.org/images/debian/buster/amd64/default/20240716_05%3A24/rootfs.tar.xz"
+#pveam download local $TEMPLATE >/dev/null ||
+#  die "A problem occured while downloading the LXC template."
 
 # Create variables for container disk
 STORAGE_TYPE=$(pvesm status -storage $STORAGE | awk 'NR>1 {print $2}')
@@ -190,7 +191,7 @@ if [ "$STORAGE_TYPE" != "zfspool" ]; then
 fi
 ARCH=$(dpkg --print-architecture)
 HOSTNAME=tuya-convert
-TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
+TEMPLATE_STRING="local:vztmpl/debian-10-standard.tar.xz"
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -cores 1 -hostname $HOSTNAME \
   -net0 name=eth0,bridge=vmbr0,ip=dhcp -ostype $OSTYPE \
   -rootfs $ROOTFS -storage $STORAGE >/dev/null
